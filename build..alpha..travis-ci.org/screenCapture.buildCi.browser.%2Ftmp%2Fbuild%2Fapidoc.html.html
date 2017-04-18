@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/webpack-contrib/sass-loader#readme"
-
-    >sass-loader (v6.0.3)</a>
+    <a href="https://github.com/webpack-contrib/sass-loader#readme">sass-loader (v6.0.3)</a>
 </h1>
 <h4>Sass loader for webpack</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.sass-loader">module sass-loader</a><ol>
 
@@ -219,7 +212,7 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function sassLoader(content) {
     const callback = this.async();
-    const isSync = typeof callback !== &#x22;function&#x22;;
+    const isSync = typeof callback !== "function";
     const self = this;
     const resourcePath = this.resourcePath;
 
@@ -229,8 +222,8 @@
     }
 
     if (isSync) {
-        throw new Error(&#x22;Synchronous compilation is not supported anymore. See https://github.com/webpack-contrib/sass-loader/issues
-/333&#x22;);
+        throw new Error("Synchronous compilation is not supported anymore. See https://github.com/webpack-contrib/sass-loader/issues
+/333");
     }
 
     this.cacheable();
@@ -242,31 +235,31 @@
     ));
 
     // Skip empty files, otherwise it will stop webpack, see issue #21
-    if (options.data.trim() === &#x22;&#x22;) {
-        callback(null, &#x22;&#x22;);
+    if (options.data.trim() === "") {
+        callback(null, "");
         return;
     }
 
     // start the actual rendering
-    asyncSassJobQueue.push(options, (err, result) =&#x3e; {
+    asyncSassJobQueue.push(options, (err, result) =&gt; {
         if (err) {
             formatSassError(err, this.resourcePath);
-            err.file &#x26;&#x26; this.dependency(err.file);
+            err.file &amp;&amp; this.dependency(err.file);
             callback(err);
             return;
         }
 
-        if (result.map &#x26;&#x26; result.map !== &#x22;{}&#x22;) {
+        if (result.map &amp;&amp; result.map !== "{}") {
             result.map = JSON.parse(result.map);
             // result.map.file is an optional property that provides the output filename.
-            // Since we don&#x27;t know the final filename in the webpack build chain yet, it makes no sense to have it.
+            // Since we don't know the final filename in the webpack build chain yet, it makes no sense to have it.
             delete result.map.file;
-            // The first source is &#x27;stdin&#x27; according to node-sass because we&#x27;ve used the data input.
-            // Now let&#x27;s override that value with the correct relative path.
-            // Since we specified options.sourceMap = path.join(process.cwd(), &#x22;/sass.map&#x22;); in normalizeOptions,
+            // The first source is 'stdin' according to node-sass because we've used the data input.
+            // Now let's override that value with the correct relative path.
+            // Since we specified options.sourceMap = path.join(process.cwd(), "/sass.map"); in normalizeOptions,
             // we know that this path is relative to process.cwd(). This is how node-sass works.
             result.map.sources[0] = path.relative(process.cwd(), resourcePath);
-            // node-sass returns POSIX paths, that&#x27;s why we need to transform them back to native paths.
+            // node-sass returns POSIX paths, that's why we need to transform them back to native paths.
             // This fixes an error on windows where the source-map module cannot resolve the source maps.
             // @see https://github.com/webpack-contrib/sass-loader/issues/366#issuecomment-279460722
             result.map.sourceRoot = path.normalize(result.map.sourceRoot);
@@ -293,7 +286,7 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function formatSassError(err, resourcePath) {
     // Instruct webpack to hide the JS stack from the console
-    // Usually you&#x27;re only interested in the SASS stack in this case.
+    // Usually you're only interested in the SASS stack in this case.
     err.hideStack = true;
 
     // The file property is missing in rare cases.
@@ -304,19 +297,19 @@
 
     let msg = err.message;
 
-    if (err.file === &#x22;stdin&#x22;) {
+    if (err.file === "stdin") {
         err.file = resourcePath;
     }
     // node-sass returns UNIX-style paths
     err.file = path.normalize(err.file);
 
-    // The &#x27;Current dir&#x27; hint of node-sass does not help us, we&#x27;re providing
+    // The 'Current dir' hint of node-sass does not help us, we're providing
     // additional information by reading the err.file property
-    msg = msg.replace(/\s*Current dir:\s*/, &#x22;&#x22;);
+    msg = msg.replace(/\s*Current dir:\s*/, "");
 
     err.message = getFileExcerptIfPossible(err) +
         msg.charAt(0).toUpperCase() + msg.slice(1) + os.EOL +
-        &#x22;      in &#x22; + err.file + &#x22; (line &#x22; + err.line + &#x22;, column &#x22; + err.column + &#x22;)&#x22;;
+        "      in " + err.file + " (line " + err.line + ", column " + err.column + ")";
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -331,36 +324,36 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function importsToResolve(request) {
-    // libsass&#x27; import algorithm works like this:
+    // libsass' import algorithm works like this:
     // In case there is no file extension...
-    //   - Prefer modules starting with &#x27;_&#x27;.
+    //   - Prefer modules starting with '_'.
     //   - File extension precedence: .scss, .sass, .css.
     // In case there is a file extension...
     //   - If the file is a CSS-file, do not include it all, but just link it via @import url().
-    //   - The exact file name must match (no auto-resolving of &#x27;_&#x27;-modules).
+    //   - The exact file name must match (no auto-resolving of '_'-modules).
 
-    // Keep in mind: ext can also be something like &#x27;.datepicker&#x27; when the true extension is omitted and the filename contains a
+    // Keep in mind: ext can also be something like '.datepicker' when the true extension is omitted and the filename contains a
  dot.
     // @see https://github.com/webpack-contrib/sass-loader/issues/167
     const ext = path.extname(request);
     const basename = path.basename(request);
     const dirname = path.dirname(request);
-    const startsWithUnderscore = basename.charAt(0) === &#x22;_&#x22;;
-    // a module import is an identifier like &#x27;bootstrap-sass&#x27;
-    // We also need to check for dirname since it might also be a deep import like &#x27;bootstrap-sass/something&#x27;
-    const isModuleImport = request.charAt(0) !== &#x22;.&#x22; &#x26;&#x26; dirname === &#x22;.&#x22;;
-    const hasCssExt = ext === &#x22;.css&#x22;;
-    const hasSassExt = ext === &#x22;.scss&#x22; || ext === &#x22;.sass&#x22;;
+    const startsWithUnderscore = basename.charAt(0) === "_";
+    // a module import is an identifier like 'bootstrap-sass'
+    // We also need to check for dirname since it might also be a deep import like 'bootstrap-sass/something'
+    const isModuleImport = request.charAt(0) !== "." &amp;&amp; dirname === ".";
+    const hasCssExt = ext === ".css";
+    const hasSassExt = ext === ".scss" || ext === ".sass";
 
-    return (isModuleImport &#x26;&#x26; [request]) || // Do not modify module imports
-        (hasCssExt &#x26;&#x26; []) || // Do not import css files
-        (hasSassExt &#x26;&#x26; [request]) || // Do not modify imports with explicit extensions
+    return (isModuleImport &amp;&amp; [request]) || // Do not modify module imports
+        (hasCssExt &amp;&amp; []) || // Do not import css files
+        (hasSassExt &amp;&amp; [request]) || // Do not modify imports with explicit extensions
         (startsWithUnderscore ? [] : extPrecedence) // Do not add underscore imports if there is already an underscore
-            .map(ext =&#x3e; &#x22;_&#x22; + basename + ext)
+            .map(ext =&gt; "_" + basename + ext)
             .concat(
-                extPrecedence.map(ext =&#x3e; basename + ext)
+                extPrecedence.map(ext =&gt; basename + ext)
             ).map(
-                file =&#x3e; dirname + &#x22;/&#x22; + file // No path.sep required here, because imports inside SASS are usually with /
+                file =&gt; dirname + "/" + file // No path.sep required here, because imports inside SASS are usually with /
             );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -382,8 +375,8 @@
     options.data = options.data ? (options.data + os.EOL + content) : content;
 
     // opt.outputStyle
-    if (!options.outputStyle &#x26;&#x26; loaderContext.minimize) {
-        options.outputStyle = &#x22;compressed&#x22;;
+    if (!options.outputStyle &amp;&amp; loaderContext.minimize) {
+        options.outputStyle = "compressed";
     }
 
     // opt.sourceMap
@@ -391,21 +384,21 @@
     // @see https://github.com/webpack/css-loader/pull/40
     if (options.sourceMap) {
         // Deliberately overriding the sourceMap option here.
-        // node-sass won&#x27;t produce source maps if the data option is used and options.sourceMap is not a string.
+        // node-sass won't produce source maps if the data option is used and options.sourceMap is not a string.
         // In case it is a string, options.sourceMap should be a path where the source map is written.
-        // But since we&#x27;re using the data option, the source map will not actually be written, but
+        // But since we're using the data option, the source map will not actually be written, but
         // all paths in sourceMap.sources will be relative to that path.
         // Pretty complicated... :(
-        options.sourceMap = path.join(process.cwd(), &#x22;/sass.map&#x22;);
-        if (&#x22;sourceMapRoot&#x22; in options === false) {
+        options.sourceMap = path.join(process.cwd(), "/sass.map");
+        if ("sourceMapRoot" in options === false) {
             options.sourceMapRoot = process.cwd();
         }
-        if (&#x22;omitSourceMapUrl&#x22; in options === false) {
-            // The source map url doesn&#x27;t make sense because we don&#x27;t know the output path
+        if ("omitSourceMapUrl" in options === false) {
+            // The source map url doesn't make sense because we don't know the output path
             // The css-loader will handle that for us
             options.omitSourceMapUrl = true;
         }
-        if (&#x22;sourceMapContents&#x22; in options === false) {
+        if ("sourceMapContents" in options === false) {
             // If sourceMapContents option is not set, set it to true otherwise maps will be empty/null
             // when exported by webpack-extract-text-plugin.
             options.sourceMapContents = true;
@@ -415,8 +408,8 @@
     // indentedSyntax is a boolean flag.
     const ext = path.extname(resourcePath);
 
-    // If we are compiling sass and indentedSyntax isn&#x27;t set, automatically set it.
-    if (ext &#x26;&#x26; ext.toLowerCase() === &#x22;.sass&#x22; &#x26;&#x26; &#x22;indentedSyntax&#x22; in options === false) {
+    // If we are compiling sass and indentedSyntax isn't set, automatically set it.
+    if (ext &amp;&amp; ext.toLowerCase() === ".sass" &amp;&amp; "indentedSyntax" in options === false) {
         options.indentedSyntax = true;
     } else {
         options.indentedSyntax = Boolean(options.indentedSyntax);
@@ -445,12 +438,12 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function proxyCustomImporters(importer, resourcePath) {
-    return [].concat(importer).map((importer) =&#x3e; {
+    return [].concat(importer).map((importer) =&gt; {
         return function (url, prev, done) {
             return importer.apply(
                 this, // eslint-disable-line no-invalid-this
                 Array.from(arguments)
-                    .map((arg, i) =&#x3e; i === 1 &#x26;&#x26; arg === &#x22;stdin&#x22; ? resourcePath : arg)
+                    .map((arg, i) =&gt; i === 1 &amp;&amp; arg === "stdin" ? resourcePath : arg)
             );
         };
     });
@@ -485,8 +478,8 @@
     <li>description and source-code<pre class="apidocCodePre">function webpackImporter(resourcePath, resolve, addNormalizedDependency) {
     function dirContextFrom(fileContext) {
         return path.dirname(
-            // The first file is &#x27;stdin&#x27; when we&#x27;re using the data option
-            fileContext === &#x22;stdin&#x22; ? resourcePath : fileContext
+            // The first file is 'stdin' when we're using the data option
+            fileContext === "stdin" ? resourcePath : fileContext
         );
     }
 
@@ -494,27 +487,27 @@
         return importsToResolve.length === 0 ?
             Promise.reject() :
             resolve(dir, importsToResolve[0])
-                .then(resolvedFile =&#x3e; {
-                    // Add the resolvedFilename as dependency. Although we&#x27;re also using stats.includedFiles, this might come
-                    // in handy when an error occurs. In this case, we don&#x27;t get stats.includedFiles from node-sass.
+                .then(resolvedFile =&gt; {
+                    // Add the resolvedFilename as dependency. Although we're also using stats.includedFiles, this might come
+                    // in handy when an error occurs. In this case, we don't get stats.includedFiles from node-sass.
                     addNormalizedDependency(resolvedFile);
                     return {
                         // By removing the CSS file extension, we trigger node-sass to include the CSS file instead of just linking
  it.
-                        file: resolvedFile.replace(matchCss, &#x22;&#x22;)
+                        file: resolvedFile.replace(matchCss, "")
                     };
-                }, () =&#x3e; startResolving(
+                }, () =&gt; startResolving(
                     dir,
                     tail(importsToResolve)
                 ));
     }
 
-    return (url, prev, done) =&#x3e; {
+    return (url, prev, done) =&gt; {
         startResolving(
             dirContextFrom(prev),
             importsToResolve(utils.urlToRequest(url))
         ) // Catch all resolving errors, return the original file and pass responsibility back to other custom importers
-            .catch(() =&#x3e; ({ file: url }))
+            .catch(() =&gt; ({ file: url }))
             .then(done);
     };
 }</pre></li>
@@ -537,7 +530,7 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function formatSassError(err, resourcePath) {
     // Instruct webpack to hide the JS stack from the console
-    // Usually you&#x27;re only interested in the SASS stack in this case.
+    // Usually you're only interested in the SASS stack in this case.
     err.hideStack = true;
 
     // The file property is missing in rare cases.
@@ -548,19 +541,19 @@
 
     let msg = err.message;
 
-    if (err.file === &#x22;stdin&#x22;) {
+    if (err.file === "stdin") {
         err.file = resourcePath;
     }
     // node-sass returns UNIX-style paths
     err.file = path.normalize(err.file);
 
-    // The &#x27;Current dir&#x27; hint of node-sass does not help us, we&#x27;re providing
+    // The 'Current dir' hint of node-sass does not help us, we're providing
     // additional information by reading the err.file property
-    msg = msg.replace(/\s*Current dir:\s*/, &#x22;&#x22;);
+    msg = msg.replace(/\s*Current dir:\s*/, "");
 
     err.message = getFileExcerptIfPossible(err) +
         msg.charAt(0).toUpperCase() + msg.slice(1) + os.EOL +
-        &#x22;      in &#x22; + err.file + &#x22; (line &#x22; + err.line + &#x22;, column &#x22; + err.column + &#x22;)&#x22;;
+        "      in " + err.file + " (line " + err.line + ", column " + err.column + ")";
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -580,36 +573,36 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function importsToResolve(request) {
-    // libsass&#x27; import algorithm works like this:
+    // libsass' import algorithm works like this:
     // In case there is no file extension...
-    //   - Prefer modules starting with &#x27;_&#x27;.
+    //   - Prefer modules starting with '_'.
     //   - File extension precedence: .scss, .sass, .css.
     // In case there is a file extension...
     //   - If the file is a CSS-file, do not include it all, but just link it via @import url().
-    //   - The exact file name must match (no auto-resolving of &#x27;_&#x27;-modules).
+    //   - The exact file name must match (no auto-resolving of '_'-modules).
 
-    // Keep in mind: ext can also be something like &#x27;.datepicker&#x27; when the true extension is omitted and the filename contains a
+    // Keep in mind: ext can also be something like '.datepicker' when the true extension is omitted and the filename contains a
  dot.
     // @see https://github.com/webpack-contrib/sass-loader/issues/167
     const ext = path.extname(request);
     const basename = path.basename(request);
     const dirname = path.dirname(request);
-    const startsWithUnderscore = basename.charAt(0) === &#x22;_&#x22;;
-    // a module import is an identifier like &#x27;bootstrap-sass&#x27;
-    // We also need to check for dirname since it might also be a deep import like &#x27;bootstrap-sass/something&#x27;
-    const isModuleImport = request.charAt(0) !== &#x22;.&#x22; &#x26;&#x26; dirname === &#x22;.&#x22;;
-    const hasCssExt = ext === &#x22;.css&#x22;;
-    const hasSassExt = ext === &#x22;.scss&#x22; || ext === &#x22;.sass&#x22;;
+    const startsWithUnderscore = basename.charAt(0) === "_";
+    // a module import is an identifier like 'bootstrap-sass'
+    // We also need to check for dirname since it might also be a deep import like 'bootstrap-sass/something'
+    const isModuleImport = request.charAt(0) !== "." &amp;&amp; dirname === ".";
+    const hasCssExt = ext === ".css";
+    const hasSassExt = ext === ".scss" || ext === ".sass";
 
-    return (isModuleImport &#x26;&#x26; [request]) || // Do not modify module imports
-        (hasCssExt &#x26;&#x26; []) || // Do not import css files
-        (hasSassExt &#x26;&#x26; [request]) || // Do not modify imports with explicit extensions
+    return (isModuleImport &amp;&amp; [request]) || // Do not modify module imports
+        (hasCssExt &amp;&amp; []) || // Do not import css files
+        (hasSassExt &amp;&amp; [request]) || // Do not modify imports with explicit extensions
         (startsWithUnderscore ? [] : extPrecedence) // Do not add underscore imports if there is already an underscore
-            .map(ext =&#x3e; &#x22;_&#x22; + basename + ext)
+            .map(ext =&gt; "_" + basename + ext)
             .concat(
-                extPrecedence.map(ext =&#x3e; basename + ext)
+                extPrecedence.map(ext =&gt; basename + ext)
             ).map(
-                file =&#x3e; dirname + &#x22;/&#x22; + file // No path.sep required here, because imports inside SASS are usually with /
+                file =&gt; dirname + "/" + file // No path.sep required here, because imports inside SASS are usually with /
             );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -636,8 +629,8 @@
     options.data = options.data ? (options.data + os.EOL + content) : content;
 
     // opt.outputStyle
-    if (!options.outputStyle &#x26;&#x26; loaderContext.minimize) {
-        options.outputStyle = &#x22;compressed&#x22;;
+    if (!options.outputStyle &amp;&amp; loaderContext.minimize) {
+        options.outputStyle = "compressed";
     }
 
     // opt.sourceMap
@@ -645,21 +638,21 @@
     // @see https://github.com/webpack/css-loader/pull/40
     if (options.sourceMap) {
         // Deliberately overriding the sourceMap option here.
-        // node-sass won&#x27;t produce source maps if the data option is used and options.sourceMap is not a string.
+        // node-sass won't produce source maps if the data option is used and options.sourceMap is not a string.
         // In case it is a string, options.sourceMap should be a path where the source map is written.
-        // But since we&#x27;re using the data option, the source map will not actually be written, but
+        // But since we're using the data option, the source map will not actually be written, but
         // all paths in sourceMap.sources will be relative to that path.
         // Pretty complicated... :(
-        options.sourceMap = path.join(process.cwd(), &#x22;/sass.map&#x22;);
-        if (&#x22;sourceMapRoot&#x22; in options === false) {
+        options.sourceMap = path.join(process.cwd(), "/sass.map");
+        if ("sourceMapRoot" in options === false) {
             options.sourceMapRoot = process.cwd();
         }
-        if (&#x22;omitSourceMapUrl&#x22; in options === false) {
-            // The source map url doesn&#x27;t make sense because we don&#x27;t know the output path
+        if ("omitSourceMapUrl" in options === false) {
+            // The source map url doesn't make sense because we don't know the output path
             // The css-loader will handle that for us
             options.omitSourceMapUrl = true;
         }
-        if (&#x22;sourceMapContents&#x22; in options === false) {
+        if ("sourceMapContents" in options === false) {
             // If sourceMapContents option is not set, set it to true otherwise maps will be empty/null
             // when exported by webpack-extract-text-plugin.
             options.sourceMapContents = true;
@@ -669,8 +662,8 @@
     // indentedSyntax is a boolean flag.
     const ext = path.extname(resourcePath);
 
-    // If we are compiling sass and indentedSyntax isn&#x27;t set, automatically set it.
-    if (ext &#x26;&#x26; ext.toLowerCase() === &#x22;.sass&#x22; &#x26;&#x26; &#x22;indentedSyntax&#x22; in options === false) {
+    // If we are compiling sass and indentedSyntax isn't set, automatically set it.
+    if (ext &amp;&amp; ext.toLowerCase() === ".sass" &amp;&amp; "indentedSyntax" in options === false) {
         options.indentedSyntax = true;
     } else {
         options.indentedSyntax = Boolean(options.indentedSyntax);
@@ -704,12 +697,12 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function proxyCustomImporters(importer, resourcePath) {
-    return [].concat(importer).map((importer) =&#x3e; {
+    return [].concat(importer).map((importer) =&gt; {
         return function (url, prev, done) {
             return importer.apply(
                 this, // eslint-disable-line no-invalid-this
                 Array.from(arguments)
-                    .map((arg, i) =&#x3e; i === 1 &#x26;&#x26; arg === &#x22;stdin&#x22; ? resourcePath : arg)
+                    .map((arg, i) =&gt; i === 1 &amp;&amp; arg === "stdin" ? resourcePath : arg)
             );
         };
     });
@@ -752,8 +745,8 @@
     <li>description and source-code<pre class="apidocCodePre">function webpackImporter(resourcePath, resolve, addNormalizedDependency) {
     function dirContextFrom(fileContext) {
         return path.dirname(
-            // The first file is &#x27;stdin&#x27; when we&#x27;re using the data option
-            fileContext === &#x22;stdin&#x22; ? resourcePath : fileContext
+            // The first file is 'stdin' when we're using the data option
+            fileContext === "stdin" ? resourcePath : fileContext
         );
     }
 
@@ -761,27 +754,27 @@
         return importsToResolve.length === 0 ?
             Promise.reject() :
             resolve(dir, importsToResolve[0])
-                .then(resolvedFile =&#x3e; {
-                    // Add the resolvedFilename as dependency. Although we&#x27;re also using stats.includedFiles, this might come
-                    // in handy when an error occurs. In this case, we don&#x27;t get stats.includedFiles from node-sass.
+                .then(resolvedFile =&gt; {
+                    // Add the resolvedFilename as dependency. Although we're also using stats.includedFiles, this might come
+                    // in handy when an error occurs. In this case, we don't get stats.includedFiles from node-sass.
                     addNormalizedDependency(resolvedFile);
                     return {
                         // By removing the CSS file extension, we trigger node-sass to include the CSS file instead of just linking
  it.
-                        file: resolvedFile.replace(matchCss, &#x22;&#x22;)
+                        file: resolvedFile.replace(matchCss, "")
                     };
-                }, () =&#x3e; startResolving(
+                }, () =&gt; startResolving(
                     dir,
                     tail(importsToResolve)
                 ));
     }
 
-    return (url, prev, done) =&#x3e; {
+    return (url, prev, done) =&gt; {
         startResolving(
             dirContextFrom(prev),
             importsToResolve(utils.urlToRequest(url))
         ) // Catch all resolving errors, return the original file and pass responsibility back to other custom importers
-            .catch(() =&#x3e; ({ file: url }))
+            .catch(() =&gt; ({ file: url }))
             .then(done);
     };
 }</pre></li>
@@ -797,3 +790,4 @@
     ]
 </div>
 </div>
+</body></html>
