@@ -1,9 +1,14 @@
-# api documentation for  [sass-loader (v6.0.3)](https://github.com/webpack-contrib/sass-loader#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-sass-loader.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-sass-loader) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-sass-loader.svg)](https://travis-ci.org/npmdoc/node-npmdoc-sass-loader)
+# npmdoc-sass-loader
+
+#### api documentation for  [sass-loader (v6.0.3)](https://github.com/webpack-contrib/sass-loader#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-sass-loader.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-sass-loader) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-sass-loader.svg)](https://travis-ci.org/npmdoc/node-npmdoc-sass-loader)
+
 #### Sass loader for webpack
 
-[![NPM](https://nodei.co/npm/sass-loader.png?downloads=true)](https://www.npmjs.com/package/sass-loader)
+[![NPM](https://nodei.co/npm/sass-loader.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/sass-loader)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-sass-loader/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-sass-loader_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-sass-loader/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-sass-loader/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-sass-loader/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-sass-loader/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-sass-loader/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-sass-loader/build/screenCapture.npmPackageListing.svg)
 
@@ -72,16 +77,13 @@
     "main": "lib/loader.js",
     "maintainers": [
         {
-            "name": "jtangelder",
-            "email": "j.tangelder@gmail.com"
+            "name": "jtangelder"
         },
         {
-            "name": "akiran",
-            "email": "kiran.coder0@gmail.com"
+            "name": "akiran"
         },
         {
-            "name": "peerigon",
-            "email": "developers@peerigon.com"
+            "name": "peerigon"
         }
     ],
     "name": "sass-loader",
@@ -90,7 +92,6 @@
         "node-sass": "^4.0.0",
         "webpack": "^2.0.0"
     },
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git://github.com/webpack-contrib/sass-loader.git"
@@ -111,16 +112,6 @@
     "version": "6.0.3"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module sass-loader](#apidoc.module.sass-loader)
-
-
-
-# <a name="apidoc.module.sass-loader"></a>[module sass-loader](#apidoc.module.sass-loader)
 
 
 
