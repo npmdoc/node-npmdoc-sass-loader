@@ -1,6 +1,6 @@
 # npmdoc-sass-loader
 
-#### api documentation for  [sass-loader (v6.0.3)](https://github.com/webpack-contrib/sass-loader#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-sass-loader.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-sass-loader) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-sass-loader.svg)](https://travis-ci.org/npmdoc/node-npmdoc-sass-loader)
+#### basic api documentation for  [sass-loader (v6.0.3)](https://github.com/webpack-contrib/sass-loader#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-sass-loader.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-sass-loader) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-sass-loader.svg)](https://travis-ci.org/npmdoc/node-npmdoc-sass-loader)
 
 #### Sass loader for webpack
 
@@ -109,7 +109,8 @@
         "test-source-map": "webpack-dev-server --config test/sourceMap/webpack.config.js --content-base ./test/sourceMap --inline",
         "test-watch": "webpack --config test/watch/webpack.config.js"
     },
-    "version": "6.0.3"
+    "version": "6.0.3",
+    "bin": {}
 }
 ```
 
